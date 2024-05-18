@@ -18,44 +18,50 @@
         </nav>
     </header>
     <main>
-        <form id="form-actualizar">
-            <label class="form-label">Titulo:</label>
-            <input type="text" class="form-control" placeholder="El nombre oficial de la película">
-            <label class="form-label">Director:</label>
-            <input type="text" class="form-control" placeholder="El nombre del director o directora de la película">
-            <label class="form-label">Género:</label>
-            <select name="" id="" class="form-select">
-                <option value="">--Seleccione una opcion--</option>
-                <option value="accion">Acción</option>
-                <option value="aventura">Aventura</option>
-                <option value="comedia">Comedia</option>
-                <option value="drama">Drama</option>
-                <option value="ciencia_ficcion">Ciencia ficción</option>
-                <option value="fantasia">Fantasía</option>
-            </select>
-            <label class="form-label">Reparto:</label>
-            <input type="text" class="form-control" placeholder="Los actores principales que participan en la película">
-            <label class="form-label">Año de lanzamiento:</label>
-            <input type="date" class="form-control" >
-            <label class="form-label">Sinopsis:</label>
-            <textarea name=""  class="form-control" id="" placeholder="Un breve resumen que describe de qué trata la película"></textarea>
-            <label class="form-label">Duración:</label>
-            <input type="text" class="form-control">
-            <label class="form-label">Calificación:</label>
-            <select name="" id="" class="form-select">
-                <option value="">--Seleccione una opcion--</option>
-                <option value="accion">G (General Audiences)</option>
-                <option value="aventura">PG (Parental Guidance Suggested)</option>
-                <option value="comedia">PG-13 (Parents Strongly Cautioned)</option>
-                <option value="drama">R (Restricted)</option>
-                <option value="ciencia_ficcion">NC-17 (Adults Only)</option>
-            </select>
-            <label class="form-label">Productora:</label>
-            <input type="text" class="form-control" placeholder="El nombre de la compañía productora de la película">
-            <label class="form-label">Presupuesto: </label>
-            <input type="number" class="form-control" placeholder="El costo estimado de producción de la película">
-            <button type="submit" class="btn btn-primary">Registrar</button>
-        </form>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <form id="form-actualizar">
+                    <label class="form-label">Titulo:</label>
+                    <input type="text" class="form-control" placeholder="El nombre oficial de la película">
+                    <label class="form-label">Director:</label>
+                    <input type="text" class="form-control" placeholder="El nombre del director o directora de la película">
+                    <label class="form-label">Género:</label>
+                    <select name="" id="" class="form-select">
+                        <option value="">--Seleccione una opcion--</option>
+                        <option value="accion">Acción</option>
+                        <option value="aventura">Aventura</option>
+                        <option value="comedia">Comedia</option>
+                        <option value="drama">Drama</option>
+                        <option value="ciencia_ficcion">Ciencia ficción</option>
+                        <option value="fantasia">Fantasía</option>
+                    </select>
+                    <label class="form-label">Reparto:</label>
+                    <input type="text" class="form-control" placeholder="Los actores principales que participan en la película">
+                    <label class="form-label">Año de lanzamiento:</label>
+                    <input type="date" class="form-control" >
+                    <label class="form-label">Sinopsis:</label>
+                    <textarea name=""  class="form-control" id="" placeholder="Un breve resumen que describe de qué trata la película"></textarea>
+                    <label class="form-label">Duración:</label>
+                    <input type="text" class="form-control">
+                    <label class="form-label">Calificación:</label>
+                    <select name="" id="" class="form-select">
+                        <option value="">--Seleccione una opcion--</option>
+                        <option value="accion">G (General Audiences)</option>
+                        <option value="aventura">PG (Parental Guidance Suggested)</option>
+                        <option value="comedia">PG-13 (Parents Strongly Cautioned)</option>
+                        <option value="drama">R (Restricted)</option>
+                        <option value="ciencia_ficcion">NC-17 (Adults Only)</option>
+                    </select>
+                    <label class="form-label">Productora:</label>
+                    <input type="text" class="form-control" placeholder="El nombre de la compañía productora de la película">
+                    <label class="form-label">Presupuesto: </label>
+                    <input type="number" class="form-control" placeholder="El costo estimado de producción de la película">
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
     </main>
 
     <script type="module">
