@@ -44,11 +44,18 @@
                     <label class="form-label">Duración:</label>
                     <input type="text" class="form-control">
                     <label class="form-label">Calificación:</label>
-                    <input type="text" class="form-control">
+                    <select name="" id="" class="form-select">
+                        <option value="">--Seleccione una opcion--</option>
+                        <option value="accion">G (General Audiences)</option>
+                        <option value="aventura">PG (Parental Guidance Suggested)</option>
+                        <option value="comedia">PG-13 (Parents Strongly Cautioned)</option>
+                        <option value="drama">R (Restricted)</option>
+                        <option value="ciencia_ficcion">NC-17 (Adults Only)</option>
+                    </select>
                     <label class="form-label">Productora:</label>
                     <input type="text" class="form-control" placeholder="El nombre de la compañía productora de la película">
                     <label class="form-label">Presupuesto: </label>
-                    <input type="text" class="form-control" placeholder="El costo estimado de producción de la película">
+                    <input type="number" class="form-control" placeholder="El costo estimado de producción de la película">
                     <button type="submit" class="btn btn-primary">Registrar</button>
                 </form>
 
