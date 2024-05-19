@@ -34,10 +34,65 @@
                     </button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="form-registro">
+                                        <label class="form-label">Titulo:</label>
+                                        <input type="text" id="titulo" class="form-control" placeholder="El nombre oficial de la película">
+                                        <label class="form-label">Director:</label>
+                                        <input type="text" id="nombreDirector" class="form-control" placeholder="El nombre del director o directora de la película">
+                                        <label class="form-label">Género:</label>
+                                        <select name="" id="cbGenero" class="form-select">
+                                            <option value="">--Seleccione una opcion--</option>
+                                            <option value="Acción">Acción</option>
+                                            <option value="Aventura">Aventura</option>
+                                            <option value="Comedia">Comedia</option>
+                                            <option value="Drama">Drama</option>
+                                            <option value="Ciencia ficción">Ciencia ficción</option>
+                                            <option value="Fantasía">Fantasía</option>
+                                        </select>
+                                        <label class="form-label">Reparto:</label>
+                                        <input type="text" id="reparto" class="form-control" placeholder="Los actores principales que participan en la película">
+                                        <label class="form-label">Año de lanzamiento:</label>
+                                        <input type="date" id="año" class="form-control" >
+                                        <label class="form-label">Sinopsis:</label>
+                                        <textarea name="" id="sinopsis"  class="form-control" id="sinopsis" placeholder="Un breve resumen que describe de qué trata la película"></textarea>
+                                        <label class="form-label">Duración:</label>
+                                        <input type="time" id="duracion" class="form-control">
+                                        <label class="form-label">Clasificación:</label>
+                                        <select name="" id="cbClasificacion" class="form-select">
+                                            <option value="">--Seleccione una opcion--</option>
+                                            <option value="G (General Audiences)">G (General Audiences)</option>
+                                            <option value="pg">PG (Parental Guidance Suggested)</option>
+                                            <option value="PG (Parental Guidance Suggested)">PG-13 (Parents Strongly Cautioned)</option>
+                                            <option value="R (Restricted)">R (Restricted)</option>
+                                            <option value="NC-17 (Adults Only)">NC-17 (Adults Only)</option>
+                                        </select>
+                                        <label class="form-label">Productora:</label>
+                                        <input type="text" id="productora" class="form-control" placeholder="El nombre de la compañía productora de la película">
+                                        <label class="form-label">Presupuesto: </label>
+                                        <input type="number" id="presupuesto" class="form-control" placeholder="El costo estimado de producción de la película">
+                                        <button type="submit" class="btn btn-primary">Registrar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <table class="table" id="tabla-registros" >
+
+                </table>
+                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
                             <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form id="form-registro">
@@ -79,21 +134,16 @@
                                     <button type="submit" class="btn btn-primary">Registrar</button>
                                 </form>
                             </div>
-                          </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
-                <hr>
-                <table class="table" id="tabla-registros" >
-
-                </table>
             </div>
         </div>
     </main>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
         
@@ -109,11 +159,12 @@
         
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-
+        
         const db = getFirestore(app);
         
         //Registrar
         const registro = document.getElementById("form-registro");
+        const deleteTask = id => deleteDoc(doc(db, 'peliculas', id));
 
         registro.addEventListener("submit", async(e)=>{
             e.preventDefault();
@@ -171,24 +222,29 @@
                             <td>${data.productora}</td>
                             <td>${data.presupuesto}</td>
                             <td>
-                                <button class="btn btn-warning" onclick="actualizar()">
+                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal1" data-id="${doc.id}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                     </svg>
                                 </button>
-                                <button class="btn btn-danger">
+                                <button class="btn btn-danger btn-delete" data-id="${doc.id}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
                                     </svg>
                                 </button>
                             </td>
                         </tr>
-
                     `;
+                    //eliminar registo
+                    const deleteButtons = document.querySelectorAll('.btn-delete');
+                    deleteButtons.forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            await deleteTask(e.target.dataset.id);
+                        })
+                    })
                 });
             });
-            
         });
 
         </script>
