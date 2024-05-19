@@ -95,7 +95,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form id="form-registro">
+                                <form id="form-actualizar">
                                     <label class="form-label">Titulo:</label>
                                     <input type="text" id="titulo" class="form-control" placeholder="El nombre oficial de la película">
                                     <label class="form-label">Director:</label>
@@ -143,7 +143,7 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
         
@@ -183,12 +183,21 @@
 
         //Registrar
         const registro = document.getElementById("form-registro");
-        const getTask = id => db.collection('peliculas').doc(id).get();
+        const actualizacion = document.getElementById("form-actualizar");
+        //- Quiero cambiar esta sintaxis
+        const getTask = (id) => {
+            const docRef = doc(db, 'peliculas', id); // Now 'doc' is accessible
+            if (docRef.exists) {
+                return getDoc(docRef);
+            } else {
+                // Handle case where document is not found
+                console.error("Document not found:", id);
+                return null;
+            }
+        };
+        //- A esta otra sintaxis similar
         const deleteTask = id => deleteDoc(doc(db, 'peliculas', id));
-        const updateTask = async (id, data) => {
-            // Update the document with the provided data
-            await updateDoc(doc(db, 'peliculas', id), data);
-        }
+        const updateTask = id => updateDoc(doc(db, 'peliculas', id));
 
         registro.addEventListener("submit", async(e)=>{
             e.preventDefault();
@@ -276,21 +285,21 @@
                     editButtons.forEach(btn => {
                         btn.addEventListener('click', async (e) => {
                             const doc = await getTask(e.target.dataset.id);
-                            const task = doc.data();
+                            console.log(doc);
 
                             editState = true;
                             id = doc.id;
 
-                            registro['titulo'].value = task.titulo;
-                            registro['nombreDirector'].value = task.director;
-                            registro['cbGenero'].value = task.genero;
-                            registro['reparto'].value = task.reparto;
-                            registro['año'].value = task.año;
-                            registro['sinopsis'].value = task.sinopsis;
-                            registro['duracion'].value = task.duracion;
-                            registro['cbClasificacion'].value = task.clasificacion;
-                            registro['productora'].value = task.productora;
-                            registro['presupuesto'].value = task.presupuesto;
+                            actualizacion['titulo'].value = data.titulo;
+                            actualizacion['nombreDirector'].value = data.director;
+                            actualizacion['cbGenero'].value = data.genero;
+                            actualizacion['reparto'].value = data.reparto;
+                            actualizacion['año'].value = data.año;
+                            actualizacion['sinopsis'].value = data.sinopsis;
+                            actualizacion['duracion'].value = data.duracion;
+                            actualizacion['cbClasificacion'].value = data.clasificacion;
+                            actualizacion['productora'].value = data.productora;
+                            actualizacion['presupuesto'].value = data.presupuesto;
                         });
                     })
                 });
