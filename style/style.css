@@ -1,0 +1,62 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+ul{
+    list-style: none;
+}
+.logo h2 a{
+    text-decoration: none;
+    color: #000;
+}
+#inicio{
+    text-decoration: none;
+    color: #000;
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 18px;
+}
+#inicio:hover, h2 a:hover{
+    color: #e96b56;
+}
+.encabezado{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px auto;
+}
+.btnInform{
+    margin-left: 10px;
+}
+.buttonInsertar{
+    text-align: right;
+}
+.content-table{
+    height: 80vh;
+    padding: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+.content-table table{
+    justify-content: center;
+    display: grid;
+}
+#form-registro{
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+input, textarea,select, button{
+    margin-bottom: 5px;
+}
+img, svg {
+    vertical-align:top !important;
+}
+.btn-aling{
+    display: flex;
+}
+th, td {
+    width: 120px;
+}
