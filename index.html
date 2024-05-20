@@ -284,15 +284,15 @@
         });
         let currentPeliculaId = null;
 
-        /*function showPeliculas(id, data) {
+        function showPeliculas(id, data) {
+            currentPeliculaId = id;
             
             document.querySelector('.update-btn').style.display = 'block';
             animalform.querySelector('button[type="submit"]').style.display = 'none';
-        }*/
+        }
         
         document.querySelector('.btn-update').addEventListener('click', async () => {
             
-            currentPeliculaId = id;
             
             actualizacion.titulo.value = data.titulo;
             actualizacion.nombreDirector.value = data.director;
