@@ -285,6 +285,13 @@
         let currentPeliculaId = null;
 
         function showPeliculas(id, data) {
+            
+            document.querySelector('.update-btn').style.display = 'block';
+            animalform.querySelector('button[type="submit"]').style.display = 'none';
+        }
+        
+        document.querySelector('.btn-update').addEventListener('click', async () => {
+            
             currentPeliculaId = id;
             
             actualizacion.titulo.value = data.titulo;
@@ -297,12 +304,8 @@
             actualizacion.cbClasificacion.value = data.clasificacion;
             actualizacion.productora.value = data.productora;
             actualizacion.presupuesto.value = data.presupuesto;
+            
 
-            document.querySelector('.update-btn').style.display = 'block';
-            animalform.querySelector('button[type="submit"]').style.display = 'none';
-        }
-
-        document.querySelector('.btn-update').addEventListener('click', async () => {
             if (currentPeliculaId) {
                 const actualizar = {
                     titulo: actualizacion.titulo.value,
