@@ -279,33 +279,52 @@
                         });
                     });
 
-                    //Actualizar registro
-
-                    const editButtons = document.querySelectorAll('.btn-edit');
-                    editButtons.forEach(btn => {
-                        btn.addEventListener('click', async (e) => {
-                            const doc = await getTask(e.target.dataset.id);
-                            console.log(doc);
-
-                            editState = true;
-                            id = doc.id;
-
-                            actualizacion['titulo'].value = data.titulo;
-                            actualizacion['nombreDirector'].value = data.director;
-                            actualizacion['cbGenero'].value = data.genero;
-                            actualizacion['reparto'].value = data.reparto;
-                            actualizacion['año'].value = data.año;
-                            actualizacion['sinopsis'].value = data.sinopsis;
-                            actualizacion['duracion'].value = data.duracion;
-                            actualizacion['cbClasificacion'].value = data.clasificacion;
-                            actualizacion['productora'].value = data.productora;
-                            actualizacion['presupuesto'].value = data.presupuesto;
-                        });
-                    })
                 });
             });
         });
-        
+        const editButtons = document.querySelectorAll('.btn-edit');
+
+        editButtons.forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const docId = e.target.dataset.id;
+            const docRef = db.collection('peliculas').doc(docId);
+            const doc = await docRef.get();
+            const data = doc.data();
+
+            // Mostrar datos en el formulario
+            document.getElementById('titulo').value = data.titulo;
+            document.getElementById('nombreDirector').value = data.director;
+            document.getElementById('cbGenero').value = data.genero;
+            document.getElementById('reparto').value = data.reparto;
+            document.getElementById('año').value = data.año;
+            document.getElementById('sinopsis').value = data.sinopsis;
+            document.getElementById('duracion').value = data.duracion;
+            document.getElementById('cbClasificacion').value = data.clasificacion;
+            document.getElementById('productora').value = data.productora;
+            document.getElementById('presupuesto').value = data.presupuesto;
+
+            // Configurar evento de actualización del formulario
+            actualizacion.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const updatedData = {
+                titulo: actualizacion.titulo.value,
+                director: actualizacion.nombreDirector.value,  
+                genero: actualizacion.cbGenero.value,
+                reparto: actualizacion.reparto.value,
+                año: actualizacion.año.value,  
+                sinopsis: actualizacion.sinopsis.value,
+                duracion: actualizacion.duracion.value,
+                clasificacion: actualizacion.cbClasificacion.value,  
+                productora: actualizacion.productora.value,
+                presupuesto: actualizacion.presupuesto.value
+            };
+            await docRef.update(updatedData);
+            // Opcional: mostrar mensaje de éxito o recargar la página
+                alert("Actualizacion exitosa")
+            });
+        });
+        });
+
 
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
