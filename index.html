@@ -97,11 +97,11 @@
                             <div class="modal-body">
                                 <form id="form-actualizar">
                                     <label class="form-label">Titulo:</label>
-                                    <input type="text" id="titulo" class="form-control" placeholder="El nombre oficial de la película">
+                                    <input type="text" id="tituloAct" class="form-control" placeholder="El nombre oficial de la película">
                                     <label class="form-label">Director:</label>
-                                    <input type="text" id="nombreDirector" class="form-control" placeholder="El nombre del director o directora de la película">
+                                    <input type="text" id="nombreDirectorAct" class="form-control" placeholder="El nombre del director o directora de la película">
                                     <label class="form-label">Género:</label>
-                                    <select name="" id="cbGenero" class="form-select">
+                                    <select name="" id="cbGeneroAct" class="form-select">
                                         <option value="">--Seleccione una opcion--</option>
                                         <option value="Acción">Acción</option>
                                         <option value="Aventura">Aventura</option>
@@ -111,15 +111,15 @@
                                         <option value="Fantasía">Fantasía</option>
                                     </select>
                                     <label class="form-label">Reparto:</label>
-                                    <input type="text" id="reparto" class="form-control" placeholder="Los actores principales que participan en la película">
+                                    <input type="text" id="repartoAct" class="form-control" placeholder="Los actores principales que participan en la película">
                                     <label class="form-label">Año de lanzamiento:</label>
-                                    <input type="date" id="año" class="form-control" >
+                                    <input type="date" id="añoAct" class="form-control" >
                                     <label class="form-label">Sinopsis:</label>
-                                    <textarea name="" id="sinopsis"  class="form-control" id="sinopsis" placeholder="Un breve resumen que describe de qué trata la película"></textarea>
+                                    <textarea name="" id="sinopsisAct"  class="form-control" id="sinopsis" placeholder="Un breve resumen que describe de qué trata la película"></textarea>
                                     <label class="form-label">Duración:</label>
-                                    <input type="time" id="duracion" class="form-control">
+                                    <input type="time" id="duracionAct" class="form-control">
                                     <label class="form-label">Clasificación:</label>
-                                    <select name="" id="cbClasificacion" class="form-select">
+                                    <select name="" id="cbClasificacionAct" class="form-select">
                                         <option value="">--Seleccione una opcion--</option>
                                         <option value="G (General Audiences)">G (General Audiences)</option>
                                         <option value="pg">PG (Parental Guidance Suggested)</option>
@@ -128,9 +128,9 @@
                                         <option value="NC-17 (Adults Only)">NC-17 (Adults Only)</option>
                                     </select>
                                     <label class="form-label">Productora:</label>
-                                    <input type="text" id="productora" class="form-control" placeholder="El nombre de la compañía productora de la película">
+                                    <input type="text" id="productoraAct" class="form-control" placeholder="El nombre de la compañía productora de la película">
                                     <label class="form-label">Presupuesto: </label>
-                                    <input type="number" id="presupuesto" class="form-control" placeholder="El costo estimado de producción de la película">
+                                    <input type="number" id="presupuestoAct" class="form-control" placeholder="El costo estimado de producción de la película">
                                     <button type="submit" class="btn btn-warning">Actualizar</button>
                                 </form>
                             </div>
@@ -292,31 +292,31 @@
             const data = doc.data();
 
             // Mostrar datos en el formulario
-            document.getElementById('titulo').value = data.titulo;
-            document.getElementById('nombreDirector').value = data.director;
-            document.getElementById('cbGenero').value = data.genero;
-            document.getElementById('reparto').value = data.reparto;
-            document.getElementById('año').value = data.año;
-            document.getElementById('sinopsis').value = data.sinopsis;
-            document.getElementById('duracion').value = data.duracion;
-            document.getElementById('cbClasificacion').value = data.clasificacion;
-            document.getElementById('productora').value = data.productora;
-            document.getElementById('presupuesto').value = data.presupuesto;
+            document.getElementById('tituloAct').value = data.titulo;
+            document.getElementById('nombreDirectorAct').value = data.director;
+            document.getElementById('cbGeneroAct').value = data.genero;
+            document.getElementById('repartoAct').value = data.reparto;
+            document.getElementById('añoAct').value = data.año;
+            document.getElementById('sinopsisAct').value = data.sinopsis;
+            document.getElementById('duracionAct').value = data.duracion;
+            document.getElementById('cbClasificacionAct').value = data.clasificacion;
+            document.getElementById('productoraAct').value = data.productora;
+            document.getElementById('presupuestoAct').value = data.presupuesto;
 
             // Configurar evento de actualización del formulario
             actualizacion.addEventListener('submit', async (event) => {
             event.preventDefault();
             const updatedData = {
-                titulo: actualizacion.titulo.value,
-                director: actualizacion.nombreDirector.value,  
-                genero: actualizacion.cbGenero.value,
-                reparto: actualizacion.reparto.value,
-                año: actualizacion.año.value,  
-                sinopsis: actualizacion.sinopsis.value,
-                duracion: actualizacion.duracion.value,
-                clasificacion: actualizacion.cbClasificacion.value,  
-                productora: actualizacion.productora.value,
-                presupuesto: actualizacion.presupuesto.value
+                titulo: actualizacion.tituloAct.value,
+                director: actualizacion.nombreDirectorAct.value,  
+                genero: actualizacion.cbGeneroAct.value,
+                reparto: actualizacion.repartoAct.value,
+                año: actualizacion.añoAct.value,  
+                sinopsis: actualizacion.sinopsisAct.value,
+                duracion: actualizacion.duracionAct.value,
+                clasificacion: actualizacion.cbClasificacionAct.value,  
+                productora: actualizacion.productoraAct.value,
+                presupuesto: actualizacion.presupuestoAct.value
             };
             await docRef.update(updatedData);
             // Opcional: mostrar mensaje de éxito o recargar la página
