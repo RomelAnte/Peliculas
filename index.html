@@ -287,16 +287,16 @@
         function showPeliculas(id, data) {
             currentPeliculaId = id;
             
-            animalform.fecha_ingreso.value = data.titulo;
-            animalform.nombre.value = data.director;
-            animalform.especie.value = data.genero;
-            animalform.edad.value = data.reparto;
-            animalform.habitat.value = data.año;
-            animalform.dieta.value = data.sinopsis;
-            animalform.comportamiento.value = data.duracion;
-            animalform.altura.value = data.clasificacion;
-            animalform.peso.value = data.productora;
-            animalform.color.value = data.presupuesto;
+            actualizacion.titulo.value = data.titulo;
+            actualizacion.nombreDirector.value = data.director;
+            actualizacion.cbGenero.value = data.genero;
+            actualizacion.reparto.value = data.reparto;
+            actualizacion.año.value = data.año;
+            actualizacion.sinopsis.value = data.sinopsis;
+            actualizacion.duracion.value = data.duracion;
+            actualizacion.cbClasificacion.value = data.clasificacion;
+            actualizacion.productora.value = data.productora;
+            actualizacion.presupuesto.value = data.presupuesto;
 
             document.querySelector('.update-btn').style.display = 'block';
             animalform.querySelector('button[type="submit"]').style.display = 'none';
