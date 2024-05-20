@@ -282,47 +282,33 @@
                 });
             });
         });
-        const editButtons = document.querySelectorAll('.btn-edit');
+        let currentPeliculaId = null;
+        document.querySelector('.btn-update').addEventListener('click', async () => {
+            if (currentAnimalId) {
+                const actualizar = {
+                    titulo: actualizacion.titulo.value,
+                    director: actualizacion.nombreDirector.value,  
+                    genero: actualizacion.cbGenero.value,
+                    reparto: actualizacion.reparto.value,
+                    año: actualizacion.año.value,  
+                    sinopsis: actualizacion.sinopsis.value,
+                    duracion: actualizacion.duracion.value,
+                    clasificacion: actualizacion.cbClasificacion.value,  
+                    productora: actualizacion.productora.value,
+                    presupuesto: actualizacion.presupuesto.value
+                };
 
-        editButtons.forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            const docId = e.target.dataset.id;
-            const docRef = db.collection('peliculas').doc(docId);
-            const doc = await docRef.get();
-            const data = doc.data();
-            console.log(data);
-            // Mostrar datos en el formulario
-            document.getElementById('tituloAct').value = data.titulo;
-            document.getElementById('nombreDirectorAct').value = data.director;
-            document.getElementById('cbGeneroAct').value = data.genero;
-            document.getElementById('repartoAct').value = data.reparto;
-            document.getElementById('añoAct').value = data.año;
-            document.getElementById('sinopsisAct').value = data.sinopsis;
-            document.getElementById('duracionAct').value = data.duracion;
-            document.getElementById('cbClasificacionAct').value = data.clasificacion;
-            document.getElementById('productoraAct').value = data.productora;
-            document.getElementById('presupuestoAct').value = data.presupuesto;
+                const docRef = doc(db, "peliculas", currentPeliculaId);
+                await updateDoc(docRef, actualizar);
 
-            // Configurar evento de actualización del formulario
-            actualizacion.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const updatedData = {
-                titulo: actualizacion.tituloAct.value,
-                director: actualizacion.nombreDirectorAct.value,  
-                genero: actualizacion.cbGeneroAct.value,
-                reparto: actualizacion.repartoAct.value,
-                año: actualizacion.añoAct.value,  
-                sinopsis: actualizacion.sinopsisAct.value,
-                duracion: actualizacion.duracionAct.value,
-                clasificacion: actualizacion.cbClasificacionAct.value,  
-                productora: actualizacion.productoraAct.value,
-                presupuesto: actualizacion.presupuestoAct.value
-            };
-            await docRef.update(updatedData);
-            // Opcional: mostrar mensaje de éxito o recargar la página
-                alert("Actualizacion exitosa")
-            });
-        });
+                const row = document.getElementById(currentPeliculaId);
+                updateTableRow(row, actualizar);
+
+                animalform.reset();
+                currentAnimalId = null;
+                document.querySelector('.btn-update').style.display = 'none';
+                animalform.querySelector('button[type="submit"]').style.display = 'block';
+            }
         });
 
 
