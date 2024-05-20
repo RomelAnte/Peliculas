@@ -131,7 +131,7 @@
                                     <input type="text" id="productoraAct" class="form-control" placeholder="El nombre de la compañía productora de la película">
                                     <label class="form-label">Presupuesto: </label>
                                     <input type="number" id="presupuestoAct" class="form-control" placeholder="El costo estimado de producción de la película">
-                                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                                    <button type="submit" class="btn btn-warning btn-update">Actualizar</button>
                                 </form>
                             </div>
                         </div>
@@ -303,7 +303,7 @@
         }
 
         document.querySelector('.btn-update').addEventListener('click', async () => {
-            if (currentAnimalId) {
+            if (currentPeliculaId) {
                 const actualizar = {
                     titulo: actualizacion.titulo.value,
                     director: actualizacion.nombreDirector.value,  
@@ -323,10 +323,10 @@
                 const row = document.getElementById(currentPeliculaId);
                 updateTableRow(row, actualizar);
 
-                animalform.reset();
-                currentAnimalId = null;
+                actualizacion.reset();
+                currentPeliculaId = null;
                 document.querySelector('.btn-update').style.display = 'none';
-                animalform.querySelector('button[type="submit"]').style.display = 'block';
+                actualizacion.querySelector('button[type="submit"]').style.display = 'block';
             }
         });
 
