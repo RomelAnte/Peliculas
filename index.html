@@ -239,7 +239,7 @@
                             <th>OPCIONES</th>
                         </tr>`
                 querySnapshot.forEach((doc) => {
-                    const data = doc.data();
+                    var data = doc.data();
                     // Agregar una fila a la tabla por cada documento
                     tablaRegistros.innerHTML += `
 
