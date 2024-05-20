@@ -290,7 +290,7 @@
             const docRef = db.collection('peliculas').doc(docId);
             const doc = await docRef.get();
             const data = doc.data();
-
+            console.log(data);
             // Mostrar datos en el formulario
             document.getElementById('tituloAct').value = data.titulo;
             document.getElementById('nombreDirectorAct').value = data.director;
