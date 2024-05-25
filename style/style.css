@@ -49,7 +49,7 @@ ul{
     text-align: left;
 }
 input, textarea,select, button{
-    margin-bottom: 5px;
+    margin-bottom: 5px !important;
 }
 img, svg {
     vertical-align:top !important;
@@ -59,4 +59,22 @@ img, svg {
 }
 th, td {
     width: 120px;
+}
+.login{
+    width: 500px;
+    margin: auto;
+}
+.btn-login-google{
+    display: flex !important;
+}
+.btn-login-google svg{
+    margin: 4px 10px 0 0;
+}
+.form-login{
+    padding: 25px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+fieldset{
+    border: 1px solid#000;
 }
