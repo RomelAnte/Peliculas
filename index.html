@@ -41,13 +41,13 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "./node_modules/@firebase/auth/";
         import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
         window.onload  = function () {
     google.accounts.id.initialize({
-        client_id: 'YOUR_GOOGLE_CLIENT_ID',
+        client_id: '821462145619-m6du7lmdpsjmgq6jomsidc64k620qcom.apps.googleusercontent.com',
         callback:  handleCredentialResponse
     });
     google.accounts.id.prompt();
