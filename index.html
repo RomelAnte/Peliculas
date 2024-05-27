@@ -29,11 +29,11 @@
                     <button type="submit" class="btn btn-primary">Iniar secion</button>
                 </form>
                 <hr>
-                <div id="login_google"class="g-signin2"></div>
+                <div id="loginGoogle" class="g-signin2"></div>
             </div>
         </div>
     </main>
-    <script>
+    <script type="module">
         /*data-onsuccess="onSignIn"
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
@@ -64,7 +64,7 @@
         auth.languageCode = 'en'
         const provider = new GoogleAuthProvider();
         
-        const loginGoogle = document.getElementById(login_google)
+        const loginGoogle = document.getElementById('loginGoogle');
 
         loginGoogle.addEventListener("click", function(){
             signInWithPopup(auth, provider)
@@ -79,6 +79,7 @@
                 const errorMessage = error.message;
                 const email = error.customData.email;
                 const credential = GoogleAuthProvider.credentialFromError(error);
+                console.log(email);
             });
         })
 
