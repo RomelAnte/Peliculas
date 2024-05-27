@@ -3,7 +3,8 @@
     "@firebase/auth": "^1.7.3"
   },
   "scripts": {
-    "dev": "lite-server"
+    "dev": "lite-server",
+    "run":"npm run dev"
   },
   "devDependencies": {
     "lite-server": "^2.6.1"
