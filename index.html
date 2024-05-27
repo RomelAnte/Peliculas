@@ -72,8 +72,8 @@
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 const user = result.user;
-                console.log(user)
-                window.location.href("./gestionarPeliculas.html")
+                alert(user);
+                window.location.href("./gestionarPeliculas.html");
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
