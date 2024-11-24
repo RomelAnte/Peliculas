@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="./style/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <meta name="google-signin-client_id" content="138371342283-n1496acka8t8n4mefdp3sg8pejuaq3gg.apps.googleusercontent.com">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta name="google-signin-client_id"
+        content="138371342283-n1496acka8t8n4mefdp3sg8pejuaq3gg.apps.googleusercontent.com">
 </head>
+
 <body>
     <header>
         <nav class="container encabezado">
@@ -29,18 +33,33 @@
                 </form>
                 <hr>
                 <button id="loginGoogle" class="btn btn-light btn-login-google">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-                        <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-google" viewBox="0 0 16 16">
+                        <path
+                            d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z" />
                     </svg>
                     Iniciar sesion con Google
                 </button>
             </div>
         </div>
+        <div id="recaptcha-container"></div>
     </main>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
+        import {
+            getAuth,
+            GoogleAuthProvider,
+            signInWithPopup,
+            getMultiFactorResolver,
+            PhoneAuthProvider,
+            PhoneMultiFactorGenerator,
+            RecaptchaVerifier
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAybJTEjm1uLtBRqEVuJXviGH8z1Bos1vQ",
             authDomain: "peliculas-c2123.firebaseapp.com",
@@ -49,33 +68,103 @@
             messagingSenderId: "1071715362827",
             appId: "1:1071715362827:web:a8fad9f093da02cffa3f0e"
         };
-        
-        // Initialize Firebase
+
+        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         auth.languageCode = 'en';
+
+        // Proveedor de Google
         const provider = new GoogleAuthProvider();
-        
+
+        // Configurar reCAPTCHA para MFA
+        const recaptchaVerifier = new RecaptchaVerifier(
+            'recaptcha-container', // ID del contenedor de reCAPTCHA en el HTML
+            {
+                size: 'invisible',
+                callback: (response) => {
+                    console.log('reCAPTCHA verificado:', response);
+                },
+            },
+            auth
+        );
+
+        // Botón de inicio de sesión con Google
         const loginGoogle = document.getElementById("loginGoogle");
 
-        loginGoogle.addEventListener("click", function(){
+        loginGoogle.addEventListener("click", function () {
             signInWithPopup(auth, provider)
-            .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-                console.log(user);
-                window.location.href = ("gestionarPeliculas.html");
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                const email = error.customData.email;
-                const credential = GoogleAuthProvider.credentialFromError(error);
-                console.log(email);
-            });
-        })
+                .then(async (result) => {
+                    const user = result.user;
+                    console.log('Usuario autenticado con Google:', user);
+
+                    // Verificar si MFA es requerido
+                    if (user.multiFactor.enrolledFactors.length === 0) {
+                        console.log("El usuario no tiene MFA configurado. Procediendo a configurarlo...");
+
+                        const phoneAuthProvider = new PhoneAuthProvider(auth);
+                        const session = await user.multiFactor.getSession();
+
+                        // Enviar código SMS
+                        const phoneInfoOptions = {
+                            phoneNumber: '+1234567890', // Número de teléfono del usuario
+                            session: session,
+                        };
+
+                        const verificationId = await phoneAuthProvider.verifyPhoneNumber(phoneInfoOptions, recaptchaVerifier);
+                        const verificationCode = prompt("Introduce el código SMS que recibiste:");
+
+                        const phoneCredential = PhoneAuthProvider.credential(verificationId, verificationCode);
+                        const assertion = PhoneMultiFactorGenerator.assertion(phoneCredential);
+
+                        // Asociar el número de teléfono como un segundo factor
+                        await user.multiFactor.enroll(assertion, "Mi número de teléfono");
+                        console.log("MFA configurado exitosamente.");
+                        window.location.href = "gestionarPeliculas.html";
+                    } else {
+                        console.log("El usuario ya tiene MFA configurado.");
+                        window.location.href = "gestionarPeliculas.html";
+                    }
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/multi-factor-auth-required') {
+                        const resolver = getMultiFactorResolver(auth, error);
+
+                        // Enviar código SMS si MFA es requerido
+                        if (resolver.hints[0].factorId === PhoneMultiFactorGenerator.FACTOR_ID) {
+                            const phoneAuthProvider = new PhoneAuthProvider(auth);
+                            const phoneInfoOptions = {
+                                multiFactorHint: resolver.hints[0],
+                                session: resolver.session,
+                            };
+
+                            phoneAuthProvider.verifyPhoneNumber(phoneInfoOptions, recaptchaVerifier)
+                                .then((verificationId) => {
+                                    const verificationCode = prompt("Introduce el código SMS que recibiste:");
+                                    const cred = PhoneAuthProvider.credential(verificationId, verificationCode);
+                                    const multiFactorAssertion = PhoneMultiFactorGenerator.assertion(cred);
+
+                                    return resolver.resolveSignIn(multiFactorAssertion);
+                                })
+                                .then((userCredential) => {
+                                    console.log("Inicio de sesión MFA exitoso.");
+                                    window.location.href = "gestionarPeliculas.html";
+                                })
+                                .catch((error) => {
+                                    console.error("Error durante el inicio de sesión con MFA:", error);
+                                });
+                        }
+                    } else {
+                        console.error("Error durante el inicio de sesión:", error);
+                    }
+                });
+        });
+
 
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
